@@ -6,10 +6,10 @@ import pygame,sys
 
 # Game variablesyes
 power = 100
-time_remaining = 360  # 6 minutes (game time)
+time_remaining = 300
 cameras = ['East Hall', 'West Hall', 'Kitchen', 'Pirate Cove']
 animatronics = ['Freddy', 'Bonnie', 'Chica', 'Foxy', 'Golden Fred']
-camera_status = {camera: False for camera in cameras}  # All cameras start off
+camera_status = {camera: False for camera in cameras}  # cameras start off
 door_closed = False
 
 # Custom functions
@@ -27,12 +27,6 @@ def play_audio(filepth):
     pygame.mixer.init()
     pygame.mixer.music.load(filepth)
     pygame.mixer.music.play()
-
-
-
-    
-
-
 
 
 # Game introduction
@@ -108,7 +102,7 @@ def open_door():
 def random_events():
     # Simulates animatronics moving or approaching
     animatronic = random.choice(animatronics)
-    event = random.choice(["approaching the office", "moving in the halls"])
+    event = random.choice(["approaching the office", "moving in the halls", "is trying to crawl through the vents!"])
     print(f"Warning: {animatronic} is {event}!")
 
 # Game loop
@@ -127,17 +121,17 @@ while time_remaining > 0 and power > 0:
         print("Invalid action! Please choose a valid command.")
 
     # Power drains passively
-    power -= 1 if not door_closed else 2
+    power -= 1.5 if not door_closed else 2.7
 
     # Random animatronic events
-    if random.random() < 0.3:  # 30% chance of an event
+    if random.random() < 0.45:  # 45% chance of an event
         random_events()
 
     # Time decreases
-    time_remaining -= 5
+    time_remaining -= 15
     time.sleep(1)
 
-# Game end
+# Game end conditions
 if power <= 0:
     print("\nYou've run out of power. The animatronics got you!")
 elif time_remaining <= 0:
